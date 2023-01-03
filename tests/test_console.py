@@ -24,7 +24,7 @@ class test_console(unittest.TestCase):
         try:
             os.remove('file.json')
             pass
-        except:
+        except Exception:
             pass
 
     def test_createUser(self):
@@ -37,7 +37,12 @@ class test_console(unittest.TestCase):
 
         # Issue console command
         with patch('sys.stdout', new=StringIO()) as f:
-            interpreter.onecmd('create User email="obisann@gmail.com" password="myPassword" first_name="Greenbel" last_name="Eleghasim"')
+            interpreter.onecmd(
+                    'create User\
+                    email="obisann@gmail.com"\
+                    password="myPassword"\
+                    first_name="Greenbel"\
+                    last_name="Eleghasim"')
 
         # Fetch objects from previously empty storage
         storage.reload()
@@ -141,7 +146,18 @@ class test_console(unittest.TestCase):
 
         # Issue console command
         with patch('sys.stdout', new=StringIO()) as f:
-            interpreter.onecmd('create Place city_id="2904e-1d9" user_id="ab0f17-ff5" name="bar_beach" description="A_place_to_enjoy_the_cool_Atlantic_ocean_breeze" number_rooms=10 number_bathrooms=20 max_guest=10 price_by_night=50 latitude=37.773972 longitude=-122.431297')
+            interpreter.onecmd(
+                    'create Place\
+                    city_id="2904e-1d9"\
+                    user_id="ab0f17-ff5"\
+                    name="bar_beach"\
+                    description="A_place_to_enjoy_the_cool_Atlantic_breeze"\
+                    number_rooms=10\
+                    number_bathrooms=20\
+                    max_guest=10\
+                    price_by_night=50\
+                    latitude=37.773972\
+                    longitude=-122.431297')
 
         # Fetch objects from previously empty storage
         storage.reload()
@@ -175,7 +191,11 @@ class test_console(unittest.TestCase):
 
         # Issue console command
         with patch('sys.stdout', new=StringIO()) as f:
-            interpreter.onecmd('create Review place_id="73e24-990" user_id="386aa-123" text="This_is_a_place_to_be"')
+            interpreter.onecmd(
+                    'create Review\
+                    place_id="73e24-990"\
+                    user_id="386aa-123"\
+                    text="This_is_a_place_to_be"')
 
         # Fetch objects from previously empty storage
         storage.reload()
