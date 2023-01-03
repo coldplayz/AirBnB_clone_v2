@@ -73,7 +73,7 @@ class HBNBCommand(cmd.Cmd):
                 pline = pline[2].strip()  # pline is now str
                 if pline:
                     # check for *args or **kwargs
-                    if pline[0] is '{' and pline[-1] is'}'\
+                    if pline[0] == '{' and pline[-1] == '}'\
                             and type(eval(pline)) is dict:
                         _args = pline
                     else:
@@ -115,13 +115,20 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        if not args:
+        # Split arguments
+        args_list = args.split()
+        #print(args_list)
+
+        if len(args_list) == 0:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif args_list[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
+        new_instance = HBNBCommand.classes[args_list[0]]()
+        # Parse attributes list == args_list[1:] and set instance attributes
+        setInstanceAttributes(new_instance, args_list[1:])
+
         storage.save()
         print(new_instance.id)
         storage.save()
@@ -272,7 +279,7 @@ class HBNBCommand(cmd.Cmd):
                 args.append(v)
         else:  # isolate args
             args = args[2]
-            if args and args[0] is '\"':  # check for quoted arg
+            if args and args[0] == '\"':  # check for quoted arg
                 second_quote = args.find('\"', 1)
                 att_name = args[1:second_quote]
                 args = args[second_quote + 1:]
@@ -280,10 +287,10 @@ class HBNBCommand(cmd.Cmd):
             args = args.partition(' ')
 
             # if att_name was not quoted arg
-            if not att_name and args[0] is not ' ':
+            if not att_name and args[0] != ' ':
                 att_name = args[0]
             # check for quoted val arg
-            if args[2] and args[2][0] is '\"':
+            if args[2] and args[2][0] == '\"':
                 att_val = args[2][1:args[2].find('\"', 1)]
 
             # if att_val was not quoted arg
@@ -319,6 +326,51 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
+
+def setInstanceAttributes(instance, attrList):
+    ''' Set attributes of instance using a list of attributes, attrList.
+
+        Args:
+            instance (obj): instance of one of the project's main classes.
+            attrList (list): a list of attributes in the format name=value
+
+        Note: if attrList is empty as in the
+        case of the command `create State`, this function should
+        return without setting any attributes.
+    '''
+    for pair in attrList:
+        # Parse out a 2-list of name and value
+        nameVal = pair.split('=')
+        name = nameVal[0]
+        val = nameVal[1]
+        # Parse the value part and set instance attribute
+        if val.startswith('"') and val.endswith('"'):
+            # String value
+            val = val.replace('_', ' ')  # replace underscores with spaces
+            val = val.strip('"')
+            if '\\' in val:
+                # Possibly escaped double quotes; only remove escape chars
+                val = val.replace('\\', '')  # remove any escape character
+            else:
+                # Remove any other double quotes
+                val = val.replace('"', '')  # remove all double quote char
+
+            setattr(instance, name, val)
+        elif '.' in val:
+            # Possible float value
+            try:
+                val = float(val)
+                setattr(instance, name, val)
+            except (ValueError, TypeError):
+                continue  # skip the attribute
+        else:
+            try:
+                # Possible integer value
+                val = int(val)
+                setattr(instance, name, val)
+            except (ValueError, TypeError):
+                continue
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
