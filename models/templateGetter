@@ -1,0 +1,21 @@
+    @property
+    def cities(self):
+        ''' Getter attribute that returns the list of City
+        instances where state_id equals the current State.id
+        '''
+        from models import storage
+
+        # Get instance id
+        state_id = self.id
+
+        # Fetch all City objects in storage
+        cities = storage.all(cls=City)  # returns a dictionary of objects
+
+        # Get those cities related to this instance
+        my_cities = []
+        for obj in cities.values():
+            if state_id == obj.state_id:
+                # ID match
+                my_cities.append(obj)
+
+        return my_cities

@@ -5,6 +5,7 @@ from datetime import datetime
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 from sqlalchemy import (
         Column, ForeignKey, Integer, String, Numeric, Date, Float)
+from models.review import Review
 
 
 class Place(BaseModel, Base):
@@ -30,3 +31,30 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     amenity_ids = []
+
+    # Relationships
+    reviews = relationship(
+            'Review', backref='place', cascade="all, delete-orphan")
+
+    # FileStorage relationship implementation
+    @property
+    def reviews(self):
+        ''' Getter attribute that returns the list of Review
+        instances where place_id equals the current Place.id
+        '''
+        from models import storage
+
+        # Get instance id
+        place_id = self.id
+
+        # Fetch all Review objects in storage
+        reviews = storage.all(cls=Review)  # returns a dictionary of objects
+
+        # Get those reviews related to this instance
+        my_reviews = []
+        for obj in reviews.values():
+            if place_id == obj.place_id:
+                # ID match
+                my_reviews.append(obj)
+
+        return my_reviews
