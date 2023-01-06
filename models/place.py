@@ -4,8 +4,25 @@ from models.base_model import BaseModel, Base
 from datetime import datetime
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 from sqlalchemy import (
-        Column, ForeignKey, Integer, String, Numeric, Date, Float)
+        Table, Column, ForeignKey, Integer, String, Numeric, Date, Float)
 from models.review import Review
+from models.amenity import Amenity
+
+# Create Table object as association table
+place_amenity = Table('place_amenity', Base.metadata,
+                      Column(
+                          'place_id',
+                          String(60),
+                          ForeignKey('places.id', ondelete='CASCADE', onupdate='CASCADE'),
+                          primary_key=True
+                          ),
+                      Column(
+                          'amenity_id',
+                          String(60),
+                          ForeignKey('amenities.id', ondelete='CASCADE', onupdate='CASCADE'),
+                          primary_key=True
+                          )
+                      )
 
 
 class Place(BaseModel, Base):
@@ -35,6 +52,13 @@ class Place(BaseModel, Base):
     # Relationships
     reviews = relationship(
             'Review', backref='place', cascade="all, delete-orphan")
+    amenities = relationship(
+            'Amenity',
+            secondary=place_amenity,
+            backref='place_amenities',
+            viewonly=False,
+            cascade='all, delete-orphan'
+            )
 
     # FileStorage relationship implementation
     @property
@@ -58,3 +82,38 @@ class Place(BaseModel, Base):
                 my_reviews.append(obj)
 
         return my_reviews
+
+    @property
+    def amenities(self):
+        ''' Getter attribute that returns the list of Amenity
+        instances where id is in amenity_ids list.
+        '''
+        from models import storage
+
+        # Fetch all Amenity objects in storage
+        amenities = storage.all(cls=Amenity)  # returns a dictionary of objects
+
+        # Get those amenities related to this instance
+        my_amenities = []
+        for obj in amenities.values():
+            # Populate amenity_ids incase getter is called first before setter
+            self.amenities = obj
+
+        for obj in amenities.values():
+            # List of amenity ids now populated
+            if obj.id in Place.amenity_ids:
+                # ID match
+                my_amenities.append(obj)
+
+        print(f'amenities: {my_amenities}')
+        return my_amenities
+
+    @amenities.setter
+    def amenities(self, obj=None):
+        ''' Setter that handles appending amenity ids to amenity_ids list.
+
+            Args:
+                obj (Amenity): an Amenity object. Defaults to None.
+        '''
+        if type(obj) is Amenity:
+            Place.amenity_ids.append(obj.id)
