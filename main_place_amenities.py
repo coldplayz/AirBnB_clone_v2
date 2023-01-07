@@ -31,15 +31,28 @@ amenity_3.save()
 
 # link place_1 with 2 amenities
 place_1.amenities.append(amenity_1)
+#place_1.amenities = amenity_1
 place_1.amenities.append(amenity_2)
+#place_1.amenities = amenity_2
+#print('place_2')
 #print(place_1.amenity_ids)
+#print(), print()
+#print(place_1.amenities)
 
 # link place_2 with 3 amenities
 place_2.amenities.append(amenity_1)
+#place_2.amenities = amenity_1
 place_2.amenities.append(amenity_2)
+#place_2.amenities = amenity_2
 place_2.amenities.append(amenity_3)
+#place_2.amenities = amenity_3
+#print('place_2')
+#print(place_2.amenity_ids)
 
 storage.save()
 
+#print('\n')
 #print(place_1.amenities)
+#print()
+#print(amenity_1.place_amenities)
 print("OK")

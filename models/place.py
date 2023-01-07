@@ -7,19 +7,28 @@ from sqlalchemy import (
         Table, Column, ForeignKey, Integer, String, Numeric, Date, Float)
 from models.review import Review
 from models.amenity import Amenity
+from os import getenv
 
 # Create Table object as association table
 place_amenity = Table('place_amenity', Base.metadata,
                       Column(
                           'place_id',
                           String(60),
-                          ForeignKey('places.id', ondelete='CASCADE', onupdate='CASCADE'),
+                          ForeignKey(
+                              'places.id',
+                              ondelete='CASCADE',
+                              onupdate='CASCADE'
+                              ),
                           primary_key=True
                           ),
                       Column(
                           'amenity_id',
                           String(60),
-                          ForeignKey('amenities.id', ondelete='CASCADE', onupdate='CASCADE'),
+                          ForeignKey(
+                              'amenities.id',
+                              ondelete='CASCADE',
+                              onupdate='CASCADE'
+                              ),
                           primary_key=True
                           )
                       )
@@ -57,64 +66,65 @@ class Place(BaseModel, Base):
             secondary=place_amenity,
             backref='place_amenities',
             viewonly=False,
-            cascade='all, delete-orphan'
+            cascade='all, delete'
             )
 
     # FileStorage relationship implementation
-    @property
-    def reviews(self):
-        ''' Getter attribute that returns the list of Review
-        instances where place_id equals the current Place.id
-        '''
-        from models import storage
+    if getenv('HBNB_TYPE_STORAGE') == 'file':
+        @property
+        def reviews(self):
+            ''' Getter attribute that returns the list of Review
+            instances where place_id equals the current Place.id
+            '''
+            from models import storage
 
-        # Get instance id
-        place_id = self.id
+            # Get instance id
+            place_id = self.id
 
-        # Fetch all Review objects in storage
-        reviews = storage.all(cls=Review)  # returns a dictionary of objects
+            # Fetch all Review objects in storage
+            reviews = storage.all(cls=Review)  # returns a dictionary of objs
 
-        # Get those reviews related to this instance
-        my_reviews = []
-        for obj in reviews.values():
-            if place_id == obj.place_id:
-                # ID match
-                my_reviews.append(obj)
+            # Get those reviews related to this instance
+            my_reviews = []
+            for obj in reviews.values():
+                if place_id == obj.place_id:
+                    # ID match
+                    my_reviews.append(obj)
 
-        return my_reviews
+            return my_reviews
 
-    @property
-    def amenities(self):
-        ''' Getter attribute that returns the list of Amenity
-        instances where id is in amenity_ids list.
-        '''
-        from models import storage
+        @property
+        def amenities(self):
+            ''' Getter attribute that returns the list of Amenity
+            instances where id is in amenity_ids list.
+            '''
+            from models import storage
 
-        # Fetch all Amenity objects in storage
-        amenities = storage.all(cls=Amenity)  # returns a dictionary of objects
+            # Fetch all Amenity objects in storage
+            amenities = storage.all(
+                    cls=Amenity)  # returns a dictionary of objects
 
-        # Get those amenities related to this instance
-        my_amenities = []
-        '''
-        for obj in amenities.values():
-            # Populate amenity_ids incase getter is called first before setter
-            self.amenities = obj
-        '''
+            # Get those amenities related to this instance
+            my_amenities = []
 
-        for obj in amenities.values():
-            # List of amenity ids now populated
-            if obj.id in Place.amenity_ids:
-                # ID match
-                my_amenities.append(obj)
+            for obj in amenities.values():
+                # List of amenity ids now populated
+                if obj.id in self.amenity_ids:
+                    # ID match
+                    my_amenities.append(obj)
 
-        return my_amenities
+            return my_amenities
 
-    @amenities.setter
-    def amenities(self, obj=None):
-        ''' Setter that handles appending amenity ids to amenity_ids list.
+        @amenities.setter
+        def amenities(self, obj=None):
+            ''' Setter that handles appending amenity ids to amenity_ids list.
 
-            Args:
-                obj (Amenity): an Amenity object. Defaults to None.
-        '''
-        if type(obj) is Amenity:
-            Place.amenity_ids.append(obj.id)
+                Args:
+                    obj (Amenity): an Amenity object. Defaults to None.
+            '''
+            if getattr(self, 'amenity_ids') == []:
+                # No amenity_ids attribute for instance yet
+                self.amenity_ids = []
+
+            if type(obj) is Amenity:
+                self.amenity_ids.append(obj.id)
