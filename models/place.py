@@ -95,9 +95,11 @@ class Place(BaseModel, Base):
 
         # Get those amenities related to this instance
         my_amenities = []
+        '''
         for obj in amenities.values():
             # Populate amenity_ids incase getter is called first before setter
             self.amenities = obj
+        '''
 
         for obj in amenities.values():
             # List of amenity ids now populated
@@ -105,7 +107,6 @@ class Place(BaseModel, Base):
                 # ID match
                 my_amenities.append(obj)
 
-        print(f'amenities: {my_amenities}')
         return my_amenities
 
     @amenities.setter

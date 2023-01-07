@@ -32,7 +32,7 @@ amenity_3.save()
 # link place_1 with 2 amenities
 place_1.amenities.append(amenity_1)
 place_1.amenities.append(amenity_2)
-print(place_1.amenity_ids)
+#print(place_1.amenity_ids)
 
 # link place_2 with 3 amenities
 place_2.amenities.append(amenity_1)
@@ -41,5 +41,5 @@ place_2.amenities.append(amenity_3)
 
 storage.save()
 
-print(place_1.amenities)
+#print(place_1.amenities)
 print("OK")
