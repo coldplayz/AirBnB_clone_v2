@@ -4,12 +4,18 @@ from models.base_model import BaseModel, Base
 from datetime import datetime
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 from sqlalchemy import Column, ForeignKey, Integer, String, Numeric, Date
+from os import getenv
 
 
-class Amenity(BaseModel, Base):
-    ''' Definition of Amenity class. '''
-    __tablename__ = 'amenities'
+if getenv('HBNB_TYPE_STORAGE', default='file') == 'db':
+    class Amenity(BaseModel, Base):
+        ''' Definition of Amenity class. '''
+        __tablename__ = 'amenities'
 
-    name = Column(String(128), nullable=False)
+        name = Column(String(128), nullable=False)
 
-    # Relationships
+        # Relationships
+else:
+    class Amenity(BaseModel):
+        ''' Amenity for file storage '''
+        name = ''
