@@ -14,7 +14,8 @@ if getenv('HBNB_TYPE_STORAGE', default='file') == 'db':
 
         state_id = Column(
                 String(60),
-                ForeignKey('states.id', ondelete='CASCADE', onupdate='CASCADE'),
+                ForeignKey(
+                    'states.id', ondelete='CASCADE', onupdate='CASCADE'),
                 nullable=False)
         name = Column(String(128), nullable=False)
 

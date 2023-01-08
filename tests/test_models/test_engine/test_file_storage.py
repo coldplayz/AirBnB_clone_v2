@@ -11,10 +11,8 @@ import os
 if os.getenv('HBNB_TYPE_STORAGE', default='db') == 'file':
     storage.__class__._FileStorage__file_path = 'test.json'
 
-
     class test_fileStorage(unittest.TestCase):
         """ Class to test the file storage method """
-
         def setUp(self):
             """ Set up test environment """
             del_list = []

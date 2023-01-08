@@ -30,7 +30,7 @@ class test_basemodel(unittest.TestCase):
     def test_default(self):
         """ """
         i = self.value()
-        self.assertEqual(type(i), self.value)
+        self.assertIs(type(i), self.value)
 
     def test_kwargs(self):
         """ """
@@ -47,6 +47,7 @@ class test_basemodel(unittest.TestCase):
         with self.assertRaises(TypeError):
             new = BaseModel(**copy)
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db', 'database storage in use')
     def test_save(self):
         """ Testing save """
         i = self.value()

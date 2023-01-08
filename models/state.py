@@ -22,6 +22,7 @@ else:
     class State(BaseModel):
         ''' State for file storage '''
         name = ''
+
         @property
         def cities(self):
             ''' Getter attribute that returns the list of City

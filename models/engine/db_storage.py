@@ -37,7 +37,7 @@ class DBStorage:
         # Drop all tables if test environment
         env = os.getenv('HBNB_ENV')
         if env == 'test':
-            Base.metadata.drop_all(engine)
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         ''' Returns all objects, or only those of class, cls, if not None.

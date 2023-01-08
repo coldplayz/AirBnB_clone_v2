@@ -14,12 +14,14 @@ if getenv('HBNB_TYPE_STORAGE', default='file') == 'db':
 
         place_id = Column(
                 String(60),
-                ForeignKey('places.id', ondelete='CASCADE', onupdate='CASCADE'),
+                ForeignKey(
+                    'places.id', ondelete='CASCADE', onupdate='CASCADE'),
                 nullable=False
                 )
         user_id = Column(
                 String(60),
-                ForeignKey('users.id', ondelete='CASCADE', onupdate='CASCADE'),
+                ForeignKey(
+                    'users.id', ondelete='CASCADE', onupdate='CASCADE'),
                 nullable=False
                 )
         text = Column(String(1024), nullable=False)
