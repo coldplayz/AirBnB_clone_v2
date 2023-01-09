@@ -13,7 +13,9 @@ if os.getenv('HBNB_TYPE_STORAGE', default='file') != 'db':
     storage.__class__._FileStorage__file_path = 'test.json'
 
 
-@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db', 'database storage in use')
+@unittest.skipIf(
+        os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db',
+        'database storage in use')
 class test_console(unittest.TestCase):
     """ Class to test the console """
 

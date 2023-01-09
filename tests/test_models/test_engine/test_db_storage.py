@@ -80,6 +80,14 @@ class test_DBStorage(unittest.TestCase):
         cur.execute('SELECT states.id FROM states')
         state_id = cur.fetchall()[0][0]
 
+        # Get state name
+        self.reset_conn()
+        cur = self.cursor
+        cur.execute('SELECT states.name FROM states')
+        state_name = cur.fetchall()[0][0]
+        # TEST state name attribute was stored correctly
+        self.assertEqual(state_name, 'California')
+
         # For City
         self.reset_conn()
         cur = self.cursor
@@ -96,6 +104,16 @@ class test_DBStorage(unittest.TestCase):
         cur = self.cursor
         cur.execute(qryCity)
         city_rowCntAfter = cur.rowcount
+
+        # Get city name and associated state id
+        self.reset_conn()
+        cur = self.cursor
+        cur.execute('SELECT cities.name, cities.state_id FROM cities')
+        city_name, city_state_id = cur.fetchall()[0]
+        # TEST the right city name is persisted
+        self.assertEqual(city_name, 'Fremont')
+        # TEST the right state id is associated
+        self.assertEqual(city_state_id, state_id)
 
         # TEST if the state record was persisted to the database
         self.assertEqual(state_rowCntAfter - state_rowCntBefore, 1)
