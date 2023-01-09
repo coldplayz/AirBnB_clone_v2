@@ -117,7 +117,6 @@ class HBNBCommand(cmd.Cmd):
         """ Create an object of any class"""
         # Split arguments
         args_list = args.split()
-        #print(args_list)
 
         if len(args_list) == 0:
             print("** class name missing **")
@@ -193,7 +192,7 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
-            del(storage.all()[key])
+            del (storage.all()[key])
             storage.save()
         except KeyError:
             print("** no instance found **")
@@ -370,6 +369,7 @@ def setInstanceAttributes(instance, attrList):
                 setattr(instance, name, val)
             except (ValueError, TypeError):
                 continue
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

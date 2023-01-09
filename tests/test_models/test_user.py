@@ -15,25 +15,33 @@ class test_User(test_basemodel):
         self.name = "User"
         self.value = User
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db', 'database storage in use')
+    @unittest.skipIf(
+            os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db',
+            'database storage in use')
     def test_first_name(self):
         """ """
         new = self.value()
         self.assertEqual(type(new.first_name), str)
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db', 'database storage in use')
+    @unittest.skipIf(
+            os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db',
+            'database storage in use')
     def test_last_name(self):
         """ """
         new = self.value()
         self.assertEqual(type(new.last_name), str)
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db', 'database storage in use')
+    @unittest.skipIf(
+            os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db',
+            'database storage in use')
     def test_email(self):
         """ """
         new = self.value()
         self.assertEqual(type(new.email), str)
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db', 'database storage in use')
+    @unittest.skipIf(
+            os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db',
+            'database storage in use')
     def test_password(self):
         """ """
         new = self.value()

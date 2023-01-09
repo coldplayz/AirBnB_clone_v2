@@ -15,19 +15,25 @@ class test_review(test_basemodel):
         self.name = "Review"
         self.value = Review
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db', 'database storage in use')
+    @unittest.skipIf(
+            os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db',
+            'database storage in use')
     def test_place_id(self):
         """ """
         new = self.value()
         self.assertEqual(type(new.place_id), str)
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db', 'database storage in use')
+    @unittest.skipIf(
+            os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db',
+            'database storage in use')
     def test_user_id(self):
         """ """
         new = self.value()
         self.assertEqual(type(new.user_id), str)
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db', 'database storage in use')
+    @unittest.skipIf(
+            os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db',
+            'database storage in use')
     def test_text(self):
         """ """
         new = self.value()

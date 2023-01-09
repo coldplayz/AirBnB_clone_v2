@@ -1,0 +1,34 @@
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE', default='file') != 'db', 'file storage in use')
+    def test_create_state(self):
+        ''' Tests the creation of a State instance.
+        '''
+        cur = self.cursor
+
+        # Prepare query
+        qry = "SELECT * FROM states"
+
+        # Execute query
+        cur.execute(qry)
+
+        # Get number of rows returned
+        rowCntBefore = cur.rowcount
+
+        # Add a record with the console
+        # Issue console command
+        with patch('sys.stdout', new=StringIO()) as f:
+            interpreter.onecmd('create State name="Lagos"')
+
+        # Flush all remaining rows before next query
+        #cur.fetchall()
+
+        # Query database again
+        self.tearDown()
+        self.setUp()
+        cur = self.cursor
+        cur.execute(qry)
+
+        # Get new row count
+        rowCntAfter = cur.rowcount
+
+        # TEST if the record was persisted to the database
+        self.assertEqual(rowCntAfter - rowCntBefore, 1)

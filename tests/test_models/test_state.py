@@ -15,7 +15,9 @@ class test_state(test_basemodel):
         self.name = "State"
         self.value = State
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db', 'database storage in use')
+    @unittest.skipIf(
+            os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db',
+            'database storage in use')
     def test_name3(self):
         """ """
         new = self.value()

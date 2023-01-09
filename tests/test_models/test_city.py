@@ -15,13 +15,17 @@ class test_City(test_basemodel):
         self.name = "City"
         self.value = City
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db', 'database storage in use')
+    @unittest.skipIf(
+            os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db',
+            'database storage in use')
     def test_state_id(self):
         """ """
         new = self.value()
         self.assertEqual(type(new.state_id), str)
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db', 'database storage in use')
+    @unittest.skipIf(
+            os.getenv('HBNB_TYPE_STORAGE', default='file') == 'db',
+            'database storage in use')
     def test_name(self):
         """ """
         new = self.value()
