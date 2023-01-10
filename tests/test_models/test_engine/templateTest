@@ -1,0 +1,76 @@
+    @unittest.skipIf(
+            os.getenv(
+                'HBNB_TYPE_STORAGE', default='file') != 'db',
+            'file storage in use')
+    def test_create_StateCity(self):
+        ''' Tests the creation of a State and associated City instance.
+        '''
+        cur = self.cursor
+
+        # Prepare query
+        qryState = "SELECT * FROM states"
+        qryCity = "SELECT * FROM cities"
+
+        # Execute query
+        cur.execute(qryState)
+
+        # Get number of rows returned
+        state_rowCntBefore = cur.rowcount
+
+        # Add a record with the console
+        # Issue console command
+        with patch('sys.stdout', new=StringIO()) as f:
+            interpreter.onecmd('create State name="California"')
+
+        # Query database again
+        self.reset_conn()
+        cur = self.cursor
+        cur.execute(qryState)
+
+        # Get new row count
+        state_rowCntAfter = cur.rowcount
+        # Get state id
+        self.reset_conn()
+        cur = self.cursor
+        cur.execute('SELECT states.id FROM states')
+        state_id = cur.fetchall()[0][0]
+
+        # Get state name
+        self.reset_conn()
+        cur = self.cursor
+        cur.execute('SELECT states.name FROM states')
+        state_name = cur.fetchall()[0][0]
+        # TEST state name attribute was stored correctly
+        self.assertEqual(state_name, 'California')
+
+        # For City
+        self.reset_conn()
+        cur = self.cursor
+        cur.execute(qryCity)
+        city_rowCntBefore = cur.rowcount
+
+        # Issue console command
+        with patch('sys.stdout', new=StringIO()) as f:
+            interpreter.onecmd(
+                    f'create City name="Fremont" state_id="{state_id}"')
+
+        # Get City row count afterwards
+        self.reset_conn()
+        cur = self.cursor
+        cur.execute(qryCity)
+        city_rowCntAfter = cur.rowcount
+
+        # Get city name and associated state id
+        self.reset_conn()
+        cur = self.cursor
+        cur.execute('SELECT cities.name, cities.state_id FROM cities')
+        city_name, city_state_id = cur.fetchall()[0]
+        # TEST the right city name is persisted
+        self.assertEqual(city_name, 'Fremont')
+        # TEST the right state id is associated
+        self.assertEqual(city_state_id, state_id)
+
+        # TEST if the state record was persisted to the database
+        self.assertEqual(state_rowCntAfter - state_rowCntBefore, 1)
+        # TEST if the city record was persisted to the database
+        self.assertEqual(city_rowCntAfter - city_rowCntBefore, 1)
