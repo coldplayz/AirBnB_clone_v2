@@ -7,6 +7,8 @@ from fabric.api import *
 from datetime import datetime
 
 def do_pack():
+    ''' Packs a .tgz archive.
+    '''
     local("mkdir -p versions")
     dtString = datetime.utcnow().strftime('%Y%m%d%H%M%S')
     filePath = f'versions/web_static_{dtString}.tgz'
