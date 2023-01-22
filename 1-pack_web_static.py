@@ -12,7 +12,7 @@ def do_pack():
     '''
     local("mkdir -p versions")
     dtString = datetime.utcnow().strftime('%Y%m%d%H%M%S')
-    filePath = f'versions/web_static_{dtString}.tgz'
-    res = local(f"tar -czvf {filePath} web_static/")
+    filePath = 'versions/web_static_{}.tgz'.format(dtString)
+    res = local("tar -czvf {} web_static/".format(filePath))
     if res.succeeded:
         return filePath
