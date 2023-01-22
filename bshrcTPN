@@ -1,0 +1,166 @@
+# Command history tweaks:
+# - Append history instead of overwriting
+#   when shell exits.
+# - When using history substitution, do not
+#   exec command immediately.
+# - Do not save to history commands starting
+#   with space.
+# - Do not save duplicated commands.
+shopt -s histappend
+shopt -s histverify
+export HISTCONTROL=ignoreboth
+
+# Default command line prompt.
+PROMPT_DIRTRIM=2
+PS1='\[\e[0;32m\]\w\[\e[0m\] \[\e[0;97m\]\$\[\e[0m\] '
+
+# Handles nonexistent commands.
+# If user has entered command which invokes non-available
+# utility, command-not-found will give a package suggestions.
+if [ -x /data/data/com.termux/files/usr/libexec/termux/command-not-found ]; then
+	command_not_found_handle() {
+		/data/data/com.termux/files/usr/libexec/termux/command-not-found "$1"
+	}
+fi
+
+# Personal aliases and exports
+alias c1="/data/data/com.termux/files/home/Utility_C-functions/1"
+alias c2="/data/data/com.termux/files/home/Utility_C-functions/2"
+alias g="/data/data/com.termux/files/home/Utility_C-functions/g"
+alias bs="/data/data/com.termux/files/home/Utility_C-functions/betty-style.pl"
+alias bd="~/Utility_C-functions/betty-doc.pl"
+alias a="./a.out"
+alias calx="cd /data/data/com.termux/files/home/alx-low_level_programming"
+
+export alx="/home/vagrant/alx-low_level_programming"
+
+export ll5="/home/vagrant/alx-low_level_programming/0x05-pointers_arrays_strings"
+
+export uf="/data/data/com.termux/files/home/Utility_C-functions"
+
+export ll4="/home/vagrant/alx-low_level_programming/0x04-more_functions_nested_loops"
+
+export ll3="/home/vagrant/alx-low_level_programming/0x03-debugging"
+
+export ll2="/home/vagrant/alx-low_level_programming/0x02-functions_nested_loops"
+
+export ll1="/home/vagrant/alx-low_level_programming/0x01-variables_if_else_while"
+
+export ll0="/home/vagrant/alx-low_level_programming/0x00-hello_world"
+
+export ll6="/home/vagrant/alx-low_level_programming/0x06-pointers_arrays_strings"
+
+export ll7="/home/vagrant/alx-low_level_programming/0x07-pointers_arrays_strings"
+
+export ll8="/home/vagrant/alx-low_level_programming/0x08-recursion"
+
+export ll9="/home/vagrant/alx-low_level_programming/0x09-static_libraries"
+
+export lla="/home/vagrant/alx-low_level_programming/0x0A-argc_argv"
+
+export llb="/home/vagrant/alx-low_level_programming/0x0B-malloc_free"
+
+export llc="/home/vagrant/alx-low_level_programming/0x0C-more_malloc_free"
+
+export lld="/home/vagrant/alx-low_level_programming/0x0D-preprocessor"
+
+export lle="/home/vagrant/alx-low_level_programming/0x0E-structures_typedef"
+
+export llf="/home/vagrant/alx-low_level_programming/0x0F-function_pointers"
+
+export ll10="/home/vagrant/alx-low_level_programming/0x10-variadic_functions"
+
+export c="/vagrant/Downloads/cp.c"
+
+alias gcce="gcc -Wall -pedantic -Werror -Wextra -std=gnu89"
+
+alias cutils="/data/data/com.termux/files/home/Utility_C-functions/cutils.sh"
+
+export pf="/home/vagrant/printf"
+
+export ll12="/home/vagrant/alx-low_level_programming/0x12-singly_linked_lists"
+
+export ll13="/home/vagrant/alx-low_level_programming/0x13-more_singly_linked_lists"
+
+export ll14="/home/vagrant/alx-low_level_programming/0x14-bit_manipulation"
+
+alias f="find . -maxdepth 1 -type f -name \*.c ! -name \*main.c"
+
+alias cto="/data/data/com.termux/files/home/Utility_C-functions/alias_files/cto"
+
+alias cfrom="/data/data/com.termux/files/home/Utility_C-functions/alias_files/cfrom"
+
+export ll15="/home/vagrant/alx-low_level_programming/0x15-file_io"
+
+export sshell="/home/vagrant/simple_shell"
+
+alias rm="rm -i"
+
+alias cpy="/data/data/com.termux/files/home/Utility_C-functions/copy/cpy"
+
+alias rdl="~/Utility_C-functions/readlist/rdl"
+
+alias popl="/data/data/com.termux/files/home/Utility_C-functions/readlist/pop.sh"
+
+alias rdme="/data/data/com.termux/files/home/Utility_C-functions/readme_filler/rdme"
+
+alias grep2="/data/data/com.termux/files/home/Utility_C-functions/grep2/grep2"
+
+alias pcs="pycodestyle --first"
+
+alias sc="shellcheck"
+
+alias sqldup="mysqld_safe -u root &"
+
+alias sqlup="sudo mysql -u root"
+
+alias w3c="/data/data/com.termux/files/home/W3C-Validator/w3c_validator.py"
+
+alias bashrc="vi /data/data/com.termux/files/usr/etc/bash.bashrc"
+
+alias srcbashrc='source /data/data/com.termux/files/usr/etc/bash.bashrc'
+
+alias todocs="~/Utility_C-functions/todocs/todocs.sh"
+
+alias cmt='git add . ; git commit'
+
+alias yt='~/Utility_C-functions/youtube/youtube_downloader.sh'
+
+alias semi='semistandard'
+
+export log0='Bel2 44384439 hbtn_0e_0_usa'
+export log4='Bel2 44384439 hbtn_0e_4_usa'
+export log6='Bel2 44384439 hbtn_0e_6_usa'
+export log14='Bel2 44384439 hbtn_0e_14_usa'
+export log100='Bel2 44384439 hbtn_0e_100_usa'
+export log101='Bel2 44384439 hbtn_0e_101_usa'
+
+export office='/data/data/com.microsoft.office.officehubrow/files/data/Local/Office/16.0/Prefetch/Downloads/'
+
+alias dumpdb='~/Utility_C-functions/dump_database/dumpdb.sh'
+
+export devenv='HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_ENV=dev HBNB_TYPE_STORAGE=db'
+
+export testenv='HBNB_MYSQL_USER=hbnb_test HBNB_MYSQL_PWD=hbnb_test_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_test_db HBNB_ENV=test HBNB_TYPE_STORAGE=db'
+
+alias u20='~/Utility_C-functions/ubuntu20/start-ubuntu20.sh'
+
+alias update_ubuntu='cp -r start-ubuntu20.sh setup-audio.sh ubuntu.sh ubuntu20-binds/ ubuntu20-fs/ Utility_C-functions/ubuntu20/'
+
+alias ssh_w1='ssh ubuntu@54.146.64.105'
+alias ssh_w2='ssh ubuntu@54.90.28.253'
+alias ssh_lb='ssh ubuntu@3.84.237.91'
+
+export web1='54.146.64.105'
+export web2='54.90.28.253'
+export lb='3.84.237.91'
+export hostName1='93069-web-01'
+export hostName2='93069-web-02'
+export remuser='ubuntu'
+export idfile='~/.ssh/id_rsa'
+
+alias sshcpy='~/alx-system_engineering-devops/0x0C-web_server/0-transfer_file'
+
+alias sandbox1='ssh 48aec4fc81ae@48aec4fc81ae.50a7ab26.alx-cod.online'
+
+# End of personal aliases and exports
