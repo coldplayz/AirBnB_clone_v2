@@ -11,7 +11,6 @@ from datetime import datetime
 # env.key_filename = '~/.ssh/id_rsa'
 
 
-@hosts('ubuntu@54.146.64.105')
 def do_pack():
     ''' Packs a .tgz archive.
     '''
@@ -100,8 +99,11 @@ def deploy():
     ''' Creates and distributes an archive to my web servers.
     '''
     # Set a constant archive path for multiple invocations in a session
-    deploy.path = getattr(deploy, 'path', do_pack())
-    print('aPath======>', deploy.path)
+    deploy.n = getattr(deploy, 'n', 0) + 1
+    if deploy.n == 1:
+        path = do_pack()
+        deploy.path = path
+
     if not deploy.path:
         return False
 
