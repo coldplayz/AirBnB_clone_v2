@@ -57,7 +57,7 @@ def do_deploy(archive_path):
 
     # Move contents of archive to right directory
     op = run(
-            "mv /data/web_static/releases/{}/web_static/*\
+            "cp -r /data/web_static/releases/{}/web_static/*\
                     /data/web_static/releases/{}/".format(
                 fileNameNoExt, fileNameNoExt))
     if op.failed:
