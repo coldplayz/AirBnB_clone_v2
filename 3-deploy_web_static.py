@@ -6,11 +6,12 @@ folder of your AirBnB Clone repo, using the function do_pack.
 from fabric.api import *
 from datetime import datetime
 
-env.user = 'ubuntu'
-env.hosts = ['54.146.64.105', '54.90.28.253']
-env.key_filename = '~/.ssh/id_rsa'
+# env.user = 'ubuntu'
+# env.hosts = ['54.146.64.105', '54.90.28.253']
+# env.key_filename = '~/.ssh/id_rsa'
 
 
+@hosts('ubuntu@54.146.64.105')
 def do_pack():
     ''' Packs a .tgz archive.
     '''
@@ -20,6 +21,11 @@ def do_pack():
     res = local("tar -czvf {} web_static/".format(filePath))
     if res.succeeded:
         return filePath
+
+
+env.user = 'ubuntu'
+env.hosts = ['54.146.64.105', '54.90.28.253']
+env.key_filename = '~/.ssh/id_rsa'
 
 
 def do_deploy(archive_path):
@@ -93,8 +99,10 @@ def do_deploy(archive_path):
 def deploy():
     ''' Creates and distributes an archive to my web servers.
     '''
-    archive_path = do_pack()
-    if not archive_path:
+    # Set a constant archive path for multiple invocations in a session
+    deploy.path = getattr(deploy, 'path', do_pack())
+    print('aPath======>', deploy.path)
+    if not deploy.path:
         return False
 
-    return do_deploy(archive_path)
+    return do_deploy(deploy.path)
