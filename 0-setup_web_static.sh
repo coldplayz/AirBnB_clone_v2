@@ -21,10 +21,7 @@ body='<!DOCTYPE html>
 		</body>
 </html>'
 
-sudo chown -R ubuntu:ubuntu /data/
-sudo chmod -R 755 /data/
-
-echo "$body" > /data/web_static/releases/test/index.html
+echo "$body" | sudo tee /data/web_static/releases/test/index.html > /dev/null
 
 # See if the desired location block exists
 location=$(sudo grep "	location ^~ /hbnb_static {" /etc/nginx/sites-available/default)
@@ -35,5 +32,8 @@ then
 	# Append a location block for /hbnb_static
 	sudo sed -i '/server_name _/a\\n\tlocation ^~ /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}' /etc/nginx/sites-available/default
 fi
+
+sudo chown -R ubuntu:ubuntu /data/
+sudo chmod -R 755 /data/
 
 sudo service nginx restart
