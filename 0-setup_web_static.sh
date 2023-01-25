@@ -8,7 +8,7 @@ sudo service nginx start
 
 sudo mkdir -p /data/web_static/releases/test
 sudo mkdir -p /data/web_static/shared
-sudo ln -sfr -T /data/web_static/releases/test /data/web_static/current
+sudo ln -sf -T /data/web_static/releases/test /data/web_static/current
 
 # Create a basic html file to test
 body='<!DOCTYPE html>
