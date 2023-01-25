@@ -22,6 +22,7 @@ body='<!DOCTYPE html>
 </html>'
 
 sudo chown -R ubuntu:ubuntu /data/
+sudo chmod -R 755 /data/
 
 echo "$body" > /data/web_static/releases/test/index.html
 
