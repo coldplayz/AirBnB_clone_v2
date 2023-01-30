@@ -40,26 +40,26 @@ def do_deploy(archive_path):
             fileNameNoExt = fileName.split('.')[0]
 
             # Create required directory if not exists
-            op = run(
+            op = sudo(
                     "mkdir -p /data/web_static/releases/{}".format(
                         fileNameNoExt))
 
             # Unpack archive to required directory
-            op = run(
+            op = sudo(
                     "tar -xzf /tmp/{} -C /data/web_static/releases/{}".format(
                         fileName, fileNameNoExt))
 
             # Delete the archive from the server
-            op = run("rm -rf /tmp/{}".format(fileName))
+            op = sudo("rm -rf /tmp/{}".format(fileName))
 
             # Move contents of archive to right directory
-            op = run(
+            op = sudo(
                     "cp -r /data/web_static/releases/{}/web_static/*\
                             /data/web_static/releases/{}/".format(
                         fileNameNoExt, fileNameNoExt))
 
             # Delete redundant web_static folder
-            op = run(
+            op = sudo(
                     "rm -rf /data/web_static/releases/{}/web_static".format(
                         fileNameNoExt))
 
@@ -68,10 +68,10 @@ def do_deploy(archive_path):
             op = sudo("chmod -R 755 /data/web_static/")
 
             # Delete the symbolic link `current`
-            op = run("rm -rf /data/web_static/current")
+            op = sudo("rm -rf /data/web_static/current")
 
             # Create new symbolic link
-            op = run(
+            op = sudo(
                     "ln -s -T /data/web_static/releases/{}/\
                             /data/web_static/current".format(fileNameNoExt))
 
