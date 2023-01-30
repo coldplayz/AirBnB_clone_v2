@@ -33,8 +33,6 @@ def do_deploy(archive_path):
         try:
             # Upload the archive to the /tmp/ directory of the web server
             op = put(archive_path, '/tmp/')
-            if op.failed:
-                return False
 
             # Parse out file name from argument
             filePathList = archive_path.split('/')
@@ -45,53 +43,37 @@ def do_deploy(archive_path):
             op = run(
                     "mkdir -p /data/web_static/releases/{}".format(
                         fileNameNoExt))
-            if op.failed:
-                return False
 
             # Unpack archive to required directory
             op = run(
                     "tar -xzf /tmp/{} -C /data/web_static/releases/{}".format(
                         fileName, fileNameNoExt))
-            if op.failed:
-                return False
 
             # Delete the archive from the server
             op = run("rm -rf /tmp/{}".format(fileName))
-            if op.failed:
-                return False
 
             # Move contents of archive to right directory
             op = run(
                     "cp -r /data/web_static/releases/{}/web_static/*\
                             /data/web_static/releases/{}/".format(
                         fileNameNoExt, fileNameNoExt))
-            if op.failed:
-                return False
 
             # Delete redundant web_static folder
             op = run(
                     "rm -rf /data/web_static/releases/{}/web_static".format(
                         fileNameNoExt))
-            if op.failed:
-                return False
 
             # Ensure the directories and files
             # have the right permissions to avoid 403
             op = sudo("chmod -R 755 /data/web_static/")
-            if op.failed:
-                return False
 
             # Delete the symbolic link `current`
             op = run("rm -rf /data/web_static/current")
-            if op.failed:
-                return False
 
             # Create new symbolic link
             op = run(
                     "ln -s -T /data/web_static/releases/{}/\
                             /data/web_static/current".format(fileNameNoExt))
-            if op.failed:
-                return False
 
             return True
         except Exception:
