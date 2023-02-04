@@ -32,7 +32,7 @@ def c_text(text):
     # Replace any underscores with space char
     text = text.replace('_', ' ')
 
-    return f'C {text}'
+    return 'C {}'.format(text)
 
 
 # Run app
