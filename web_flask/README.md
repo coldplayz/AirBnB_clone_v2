@@ -13,4 +13,7 @@
 * 5-number_template.py: defines `/number_template/<n>` endpoint.
 * templates/5-number.html: jinja template for task 5.
 
+* 6-number_odd_or_even.py: defines `/number_odd_or_even/<n>` endpoint.
+* templates/6-number_odd_or_even.html: jinja template for task 6.
+
 
