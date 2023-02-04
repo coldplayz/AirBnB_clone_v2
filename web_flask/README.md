@@ -10,4 +10,7 @@
 
 * 4-number_route.py: adds `/number/<n>` route.
 
+* 5-number_template.py: defines `/number_template/<n>` endpoint.
+* templates/5-number.html: jinja template for task 5.
+
 
