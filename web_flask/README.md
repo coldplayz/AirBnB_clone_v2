@@ -6,4 +6,6 @@
 
 * 2-c_route.py: adds `/c/<text>` endpoint.
 
+* 3-python_route.py: adds `/python/<text>` endpoint.
+
 
