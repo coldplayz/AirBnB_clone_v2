@@ -8,4 +8,6 @@
 
 * 3-python_route.py: adds `/python/<text>` endpoint.
 
+* 4-number_route.py: adds `/number/<n>` route.
+
 
