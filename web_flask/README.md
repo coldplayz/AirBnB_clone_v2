@@ -4,4 +4,6 @@
 
 * 1-hbnb_route.py: defines /hbnb endpoint.
 
+* 2-c_route.py: adds `/c/<text>` endpoint.
+
 
