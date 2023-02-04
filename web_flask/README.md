@@ -2,4 +2,6 @@
 
 * 0-hello_route.py: starts a basic Flask web app.
 
+* 1-hbnb_route.py: defines /hbnb endpoint.
+
 
