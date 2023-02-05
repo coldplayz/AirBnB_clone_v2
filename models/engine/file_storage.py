@@ -71,3 +71,8 @@ class FileStorage:
             for key in obj_cpy.keys():
                 if obj is obj_cpy[key]:
                     del FileStorage.__objects[key]
+
+    def close(self):
+        ''' Reloads objects.
+        '''
+        self.reload()

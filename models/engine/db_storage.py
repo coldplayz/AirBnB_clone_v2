@@ -121,3 +121,8 @@ class DBStorage:
 
         # Create all tables
         Base.metadata.create_all(self.__engine)
+
+    def close(self):
+        ''' Remove current Session object stored in scoped session registry.
+        '''
+        self.__session.remove()
