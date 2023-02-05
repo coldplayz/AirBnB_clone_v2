@@ -2,7 +2,8 @@
 """This module defines a class User"""
 from models.base_model import BaseModel, Base
 from datetime import datetime
-from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+from sqlalchemy.orm import relationship, sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, ForeignKey, Integer, String, Numeric, Date
 from os import getenv
 

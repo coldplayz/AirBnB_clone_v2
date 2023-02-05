@@ -3,7 +3,8 @@
 '''
 from datetime import datetime
 from sqlalchemy.orm import (
-        declarative_base, relationship, sessionmaker, scoped_session)
+        relationship, sessionmaker, scoped_session)
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import (
         create_engine, Column, ForeignKey, Integer, String, Numeric, Date)
 from models.base_model import Base
