@@ -1,26 +1,37 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
+"""
+ Test cities access from a state
+"""
+from models import storage
+from models.state import State
+from models.city import City
 
-from models.state import State, City
+"""
+ Objects creations
+"""
+state_1 = State(name="California")
+print("New state: {}".format(state_1))
+state_1.save()
+state_2 = State(name="Arizona")
+print("New state: {}".format(state_2))
+state_2.save()
 
-s1 = State()
-s1ID = s1.id
-s1.save()
+city_1_1 = City(state_id=state_1.id, name="Napa")
+print("New city: {} in the state: {}".format(city_1_1, state_1))
+city_1_1.save()
+city_1_2 = City(state_id=state_1.id, name="Sonoma")
+print("New city: {} in the state: {}".format(city_1_2, state_1))
+city_1_2.save()
+city_2_1 = City(state_id=state_2.id, name="Page")
+print("New city: {} in the state: {}".format(city_2_1, state_2))
+city_2_1.save()
 
-s2 = State()
-s2ID = s2.id
-s2.save()
 
-c1 = City()
-c1.name = "Ikeja"
-c1.state_id = s1ID
-c1.save()
-
-c2 = City()
-c2.name = "Ajah"
-c2.state_id = s1ID
-c2.save()
-
-c3 = City()
-c3.name = "Okigwe"
-c3.state_id = s2ID
-c3.save()
+"""
+ Verification
+"""
+print("")
+all_states = storage.all(State)
+for state_id, state in all_states.items():
+    for city in state.cities:
+        print("Find the city {} in the state {}".format(city, state))

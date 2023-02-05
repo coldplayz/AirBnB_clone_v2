@@ -31,7 +31,8 @@ class DBStorage:
         host = os.getenv('HBNB_MYSQL_HOST')
         db = os.getenv('HBNB_MYSQL_DB')
 
-        connect_string = f'{dialect}+{driver}://{user}:{pwd}@{host}/{db}'
+        connect_string = '{}+{}://{}:{}@{}/{}'.format(
+                dialect, driver, user, pwd, host, db)
         self.__engine = create_engine(connect_string, pool_pre_ping=True)
 
         # Drop all tables if test environment
