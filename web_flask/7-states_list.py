@@ -10,10 +10,8 @@ from models.state import State
 app = Flask(__name__)
 
 
-# Define endpoints
-
 @app.teardown_appcontext
-def close_session():
+def close_session(self):
     ''' Close session associated with the app.
     '''
     storage.close()
