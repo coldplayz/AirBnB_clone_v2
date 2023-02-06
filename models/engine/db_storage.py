@@ -56,7 +56,7 @@ class DBStorage:
 
         # Get list of objects
         if cls:
-            # Get a cls objects only
+            # Get cls objects only
             objs = sess.query(cls).all()
         else:
             # Get all objects
