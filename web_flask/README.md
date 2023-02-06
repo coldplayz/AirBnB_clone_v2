@@ -16,4 +16,6 @@
 * 6-number_odd_or_even.py: defines `/number_odd_or_even/<n>` endpoint.
 * templates/6-number_odd_or_even.html: jinja template for task 6.
 
+* 7-states_list.py: defines `/states_list` route. Uses data from a MySQL database.
+
 
