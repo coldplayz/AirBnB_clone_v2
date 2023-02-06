@@ -18,11 +18,12 @@ def close_session(self):
 
 
 # Get all State objects
-states = storage.all(cls=State)
+raw_states = storage.all(cls=State)
+states = {}
 # Replace State objects with name in states dict
-states_copy = states.copy()
+states_copy = raw_states.copy()
 for key, value in states_copy.items():
-    states[key] = value.name
+    states[key.split('.')[1]] = value.name
 
 
 @app.route('/states_list', strict_slashes=False)
