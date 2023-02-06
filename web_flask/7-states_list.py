@@ -23,7 +23,7 @@ states = {}
 # Replace State objects with name in states dict
 states_copy = raw_states.copy()
 for key, value in states_copy.items():
-    states[key.split('.')[1]] = value.name
+    states[value.id] = value.name
 
 
 @app.route('/states_list', strict_slashes=False)
