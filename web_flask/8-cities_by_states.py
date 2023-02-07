@@ -13,7 +13,6 @@ script starts Flask web app
             /cities_by_states:    display HTML and state, city relations
 """
 from models import storage
-from models import storage
 from models.state import State
 from flask import Flask, render_template
 
@@ -32,7 +31,7 @@ def display_cities_by_states():
        fetch sorted states to insert into html in UL tag
        fetch sorted cities in each state into LI tag ->in HTML file
     """
-    state_objs = [s for s in storage.all("State").values()]
+    state_objs = [s for s in storage.all(cls=State).values()]
     return render_template('8-cities_by_states.html',
                            state_objs=state_objs)
 
