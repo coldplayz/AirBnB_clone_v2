@@ -38,7 +38,7 @@ def all_static_filters():
     """
     state_objs = [s for s in storage.all(cls=State).values()]
     amenity_objs = [a for a in storage.all(cls=Amenity).values()]
-    place_objs = [p for p in storage.all(cls=Amenity).values()]
+    place_objs = [p for p in storage.all(cls=Place).values()]
     user_objs = [u for u in storage.all(cls=User).values()]
     place_owner_objs = []
     for place in place_objs:
